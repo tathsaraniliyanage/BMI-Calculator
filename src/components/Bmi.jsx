@@ -1,22 +1,33 @@
 import React, { useState } from 'react';
-import Bmicategory from './Bmicategory.jsx';
 
 function Bmi() {
 
     const [weight, setWeight] = useState('');
     const [height, setHeight] = useState('');
     const [bmi, setBmi] = useState(null);
+    const [category, setCategory] = useState('');
 
 
+    const findCategory = (bmi) => {
+        if (bmi < 18.5) {
+            return 'Underweight';
+        } else if (bmi >= 18.5 && bmi < 24.9) {
+            return 'Normal weight';
+        } else if (bmi >= 25 && bmi < 29.9) {
+            return 'Overweight';
+        } else {
+            return 'Obesity';
+        }
+    }
 
     const calculateBmi = () => {
         if (weight > 0 && height > 0) {
             const result = (weight / (height * height)).toFixed(2);
             setBmi(result);
-
+            setCategory(findCategory(result));
         } else {
-            setBmi('Please enter valid values');
-
+            setBmi(null);
+            setCategory('Please enter valid values');
         }
     };
 
@@ -56,17 +67,26 @@ function Bmi() {
             <button type="button" onClick={calculateBmi}>Calculate BMI</button>
 
             {/* result display */}
-            <div id="result" >
+            {/* <div id="result" >
                 <h2 >Your BMI will be displayed here</h2>
                 {bmi &&
                     <>
                         <h2>Your BMI: {bmi}</h2>
-                        <h2>Your BMI Category: {getCategory(bmi)}</h2>
+                        <h2>Your BMI Category: {findCategory(bmi)}</h2>
                     </>
                 }
+            </div> */}
+
+            <div id="result">
+                {bmi ? (
+                    <>
+                        <h2>Your BMI: {bmi}</h2>
+                        <h2>Your BMI Category: {category}</h2>
+                    </>
+                ) : (
+                    <h2>{category || "Your BMI will be displayed here"}</h2>
+                )}
             </div>
-
-
 
             {/* footer section*/}
             <div className='footer'>
