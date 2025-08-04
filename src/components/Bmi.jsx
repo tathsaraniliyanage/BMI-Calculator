@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import Bmicategory from './Bmicategory.jsx';
 
 function Bmi() {
 
@@ -59,7 +59,10 @@ function Bmi() {
             <div id="result" >
                 <h2 >Your BMI will be displayed here</h2>
                 {bmi &&
-                    <h2>Your BMI: {bmi}</h2>
+                    <>
+                        <h2>Your BMI: {bmi}</h2>
+                        <h2>Your BMI Category: {getCategory(bmi)}</h2>
+                    </>
                 }
             </div>
 
